@@ -13,16 +13,16 @@
   <arg name="verbose" default="false"/>
 
   <node name="vgraph_planner_node" pkg="vgraph_nav" type="vgraph_planner.py" output="screen">
-    <param name="~map_file" value="$(arg map_file)"/>
-    <param name="~test_folder" value="$(arg test_folder)"/>
-    <param name="~epsilon_factor" value="$(arg epsilon_factor)"/>
-    <param name="~robot_radius" value="$(arg robot_radius)"/>
-    <param name="~odom_topic" value="$(arg odom_topic)"/>
-    <param name="~scan_topic" value="$(arg scan_topic)"/>
-    <param name="~vel_linear" value="$(arg vel_linear)"/>
-    <param name="~vel_theta" value="$(arg vel_theta)"/>
-    <param name="~angle_tolerance" value="$(arg angle_tolerance)"/>
-    <param name="~goal_tolerance" value="$(arg goal_tolerance)"/>
-    <param name="~verbose" value="$(arg verbose)"/>
+    <param name="map_file" value="$(arg map_file)"/>
+    <param name="test_folder" value="$(arg test_folder)"/>
+    <param name="epsilon_factor" value="$(arg epsilon_factor)"/>
+    <param name="robot_radius" value="$(arg robot_radius)"/>
+    <param name="odom_topic" value="$(arg odom_topic)"/>
+    <param name="scan_topic" value="$(arg scan_topic)"/>
+    <param name="vel_linear" value="$(arg vel_linear)"/>
+    <param name="vel_theta" value="$(arg vel_theta)"/>
+    <param name="angle_tolerance" value="$(arg angle_tolerance)"/>
+    <param name="goal_tolerance" value="$(arg goal_tolerance)"/>
+    <param name="verbose" value="$(arg verbose)"/>
   </node>
 </launch>

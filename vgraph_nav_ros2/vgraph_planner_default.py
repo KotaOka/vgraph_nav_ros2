@@ -55,7 +55,7 @@ from tf_transformations import euler_from_quaternion
 from tf2_ros import TransformListener, Buffer
 
 
-class VgraphPlannerNode:
+class VgraphPlannerNode(Node):
     def __init__(self):
         self.map_file_path = self.declare_parameter("map_file", "map.yaml").get_parameter_value().string_value
         self.test_folder_path = self.declare_parameter("test_folder", "test").get_parameter_value().string_value
@@ -213,7 +213,7 @@ class VgraphPlannerNode:
 
         path = self.make_plan(self.start_point, self.end_point)
         
-         if path is None:
+        if path is None:
             self.get_logger().info("No valid path found.")
             return
 
@@ -247,7 +247,7 @@ class VgraphPlannerNode:
         pass
 
     def pose_to_pixel(self, pose):
-    '''
+        '''
         origin_x = self.origin[0]
         origin_y = self.origin[1]
         pixel_x = int(round((pose[0] - origin_x) / self.resolution))
@@ -256,7 +256,7 @@ class VgraphPlannerNode:
         )
 
         return (pixel_x, pixel_y)
-     '''
+        '''
         x = pose[0] - self.origin[0]
         y = pose[1] - self.origin[1]
         pixel_x = int(round(x / self.resolution))
@@ -399,7 +399,7 @@ class VgraphPlannerNode:
 
         return valid_edges
         '''
-         valid_edges = set()
+        valid_edges = set()
 
         for (start_x, start_y) in corners:
             for (end_x, end_y) in corners:
@@ -932,7 +932,7 @@ class VgraphPlannerNode:
     '''
 
 
-def main():
+def main(args=None):
     # rospy.init_node("vgraph_planner_node")
     # VgraphPlannerNode()
     # rospy.spin()
