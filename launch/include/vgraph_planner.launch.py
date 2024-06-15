@@ -9,12 +9,12 @@ def generate_launch_description():
     # Define launch arguments
     map_file_arg = DeclareLaunchArgument(
         'map_file',
-        default_value=os.path.join(get_package_share_directory('vgraph_nav'), 'map', 'map.yaml'),
+        default_value=os.path.join(get_package_share_directory('vgraph_nav_ros2'), 'maps', 'map.yaml'),
         description='Path to the map file'
     )
     test_folder_arg = DeclareLaunchArgument(
         'test_folder',
-        default_value=os.path.join(get_package_share_directory('vgraph_nav'), 'test'),
+        default_value=os.path.join(get_package_share_directory('vgraph_nav_ros2'), 'test'),
         description='Path to the test folder'
     )
     epsilon_factor_arg = DeclareLaunchArgument(
@@ -66,7 +66,7 @@ def generate_launch_description():
     # Define the vgraph_planner_node
     vgraph_planner_node = Node(
         package='vgraph_nav_ros2',
-        executable='vgraph_planner_node',
+        executable='vgraph_nav_ros2_node',
         parameters=[{
             'map_file': LaunchConfiguration('map_file'),
             'test_folder': LaunchConfiguration('test_folder'),
