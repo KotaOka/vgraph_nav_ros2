@@ -51,7 +51,7 @@ def generate_launch_description():
     # Include the empty world launch from gazebo_ros
     world_launch = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(os.path.join(
-            get_package_share_directory('turtlebot3_gazebo'), 'launch', 'empty_world.launch.py')),
+            get_package_share_directory('turtlebot3_gazebo'), 'launch', 'turtlebot3_world.launch.py')),
         launch_arguments={
             'world_name': os.path.join(get_package_share_directory('turtlebot3_gazebo'), 'worlds', 'turtlebot3_world.world'),
             'paused': 'false',

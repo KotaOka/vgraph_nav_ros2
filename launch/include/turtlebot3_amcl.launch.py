@@ -3,6 +3,8 @@ from launch import LaunchDescription
 from launch_ros.actions import Node
 from launch.actions import DeclareLaunchArgument
 from launch.substitutions import LaunchConfiguration
+from geometry_msgs.msg import TransformStamped, Quaternion, Vector3
+from std_msgs.msg import Header
 
 def generate_launch_description():
     # Launch argument definitions
@@ -63,11 +65,26 @@ def generate_launch_description():
             {'odom_alpha3': 0.1},
             {'odom_alpha4': 0.1},
             {'odom_frame_id': 'odom'},
-            {'base_frame_id': 'base_footprint'}
+            {'base_frame_id': 'base_footprint'},
+            {'use_sim_time': True}  # シミュレーション時間を使用する場合
         ],
         remappings=[
             ('scan', LaunchConfiguration('scan_topic'))
         ]
+    )
+
+    # Static transform publisher from /map to /odom
+    static_transform = TransformStamped()
+    static_transform.header = Header(frame_id='map')
+    static_transform.child_frame_id = 'odom'
+    static_transform.transform.translation = Vector3(x=0.0, y=0.0, z=0.0)
+    static_transform.transform.rotation = Quaternion(x=0.0, y=0.0, z=0.0, w=1.0)
+
+    static_transform_publisher = Node(
+        package='tf2_ros',
+        executable='static_transform_publisher',
+        arguments=['0', '0', '0', '0', '0', '0', '1', 'map', 'odom'],
+        output='screen'
     )
 
     return LaunchDescription([
@@ -75,6 +92,7 @@ def generate_launch_description():
         initial_x_pos_arg,
         initial_y_pos_arg,
         initial_yaw_pos_arg,
-        amcl_node
+        amcl_node,
+        static_transform_publisher
     ])
 

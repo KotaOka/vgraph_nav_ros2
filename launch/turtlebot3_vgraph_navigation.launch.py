@@ -84,7 +84,7 @@ def generate_launch_description():
     turtlebot3_remote_launch = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(
             PathJoinSubstitution([
-                FindPackageShare('turtlebot3_bringup'), 'launch', 'turtlebot3_remote.launch.py'
+                FindPackageShare('turtlebot3_bringup'), 'launch', 'turtlebot3_state_publisher.launch.py'
             ])
         ),
         launch_arguments={'model': LaunchConfiguration('model')}.items()
@@ -165,11 +165,10 @@ def generate_launch_description():
         declare_goal_tolerance_arg,
         declare_verbose_arg,
         declare_open_rviz_arg,
-        turtlebot3_world_launch,
+        # turtlebot3_world_launch,
         turtlebot3_remote_launch,
         turtlebot3_amcl_launch,
         vgraph_planner_launch,
         map_server_node,
         rviz_node
     ])
-

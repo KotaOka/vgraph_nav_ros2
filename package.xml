@@ -21,7 +21,10 @@
   <exec_depend>amcl</exec_depend>
   <exec_depend>gazebo_ros</exec_depend>
   <exec_depend>map_server</exec_depend>
+  <exec_depend>nav2_map_server</exec_depend>
   <exec_depend>rviz</exec_depend>
+  <depend>rviz_common</depend>
+  <depend>rviz_default_plugins</depend>
   <exec_depend>turtlebot3_bringup</exec_depend>
   <exec_depend>turtlebot3_description</exec_depend>
   <exec_depend>turtlebot3_gazebo</exec_depend>
