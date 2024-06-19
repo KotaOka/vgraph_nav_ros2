@@ -40,6 +40,10 @@ from tf2_ros import TransformListener, Buffer
 
 from ament_index_python.packages import get_package_share_directory
 
+import tf2_ros
+from geometry_msgs.msg import TransformStamped
+
+
 class VgraphPlannerNode(Node):
     def __init__(self):
         super().__init__('vgraph_planner_node')
@@ -55,6 +59,8 @@ class VgraphPlannerNode(Node):
         self.angle_tolerance = self.declare_parameter("angle_tolerance", 0.1).get_parameter_value().double_value
         self.goal_tolerance = self.declare_parameter("goal_tolerance", 0.1).get_parameter_value().double_value
         self.verbose = self.declare_parameter("verbose", False).get_parameter_value().bool_value
+        
+
 
         self.start_point = None
         self.end_point = None
@@ -70,6 +76,7 @@ class VgraphPlannerNode(Node):
         self.create_subscription(Odometry, self.odom_topic, self.odom_callback, 10)
         self.create_subscription(LaserScan, self.scan_topic, self.scan_callback, 10)
 
+        self.tf_broadcaster = tf2_ros.TransformBroadcaster(self)
         self.tf_buffer = Buffer()
         self.tf_listener = TransformListener(self.tf_buffer, self)
 
@@ -205,6 +212,26 @@ class VgraphPlannerNode(Node):
 
         self.costmap_pub.publish(cost_map_msg)
 
+    def broadcast_cost_map_tf(self):
+        transform_stamped = TransformStamped()
+        transform_stamped.header.stamp = self.get_clock().now().to_msg()
+        transform_stamped.header.frame_id = "cost_map_frame"
+        transform_stamped.child_frame_id = "base_link"
+
+        # /cost_map トピックからの情報を利用して、位置と姿勢を設定する
+        # ここでは例として原点を基準にしていますが、適切な位置情報をセットしてください
+        transform_stamped.transform.translation.x = 0.0
+        transform_stamped.transform.translation.y = 0.0
+        transform_stamped.transform.translation.z = 0.0
+        transform_stamped.transform.rotation.x = 0.0
+        transform_stamped.transform.rotation.y = 0.0
+        transform_stamped.transform.rotation.z = 0.0
+        transform_stamped.transform.rotation.w = 1.0
+
+        # TFフレームをブロードキャスト
+        self.tf_broadcaster.sendTransform(transform_stamped)
+
+    
     def initial_pose_callback(self, msg):
         self.start_point = self.pose_to_pixel(
             (msg.pose.pose.position.x, msg.pose.pose.position.y)
